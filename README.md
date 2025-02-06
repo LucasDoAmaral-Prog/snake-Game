@@ -47,7 +47,7 @@ cd snake-game
 pip install pygame
 ```
 
-###📦▶️ 3. Execute o jogo | Run the game
+### ▶️ 3. Execute o jogo | Run the game
 
 ```sh
 python snake.py
