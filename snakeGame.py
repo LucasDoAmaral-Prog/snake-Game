@@ -33,7 +33,6 @@ direction_Snake = pygame.K_w;
 time_Initial = time.time();
 
 def sortApple():
-
     return random.randint(15, 585), random.randint(15, 585);
 
 apple_Surface = pygame.Surface((block_Space, block_Space));
@@ -47,7 +46,6 @@ len_ListApple = len(pos_Apple);
 font_PointsApple = pygame.font.SysFont('arial', 35, True, True);
 
 def sortObstacle():
-
     coords_Verify = (random.randint(15, 585), random.randint(15, 585));
      
     for index in range(num_MaxApples):
@@ -77,30 +75,29 @@ while snake_Running:
 
     for event in pygame.event.get():
         if (event.type == QUIT):
-
             pygame.quit();
             quit();
 
         if(event.type == pygame.KEYDOWN):
-            if event.key in [pygame.K_a, pygame.K_s, pygame.K_w, pygame.K_d]: 
-                if (event.key == pygame.K_a and direction_Snake == pygame.K_d):
+            if event.key in [pygame.K_a, pygame.K_s, pygame.K_w, pygame.K_d, pygame.K_LEFT, pygame.K_DOWN, pygame.K_UP, pygame.K_RIGHT]:  
+                if (event.key in [pygame.K_a, pygame.K_LEFT] and direction_Snake in [pygame.K_d, pygame.K_RIGHT]):
                     continue;
-                elif (event.key == pygame.K_w and direction_Snake == pygame.K_s):
+                elif (event.key in [pygame.K_w, pygame.K_UP] and direction_Snake in [pygame.K_s, pygame.K_DOWN]):
                     continue;
-                elif(event.key == pygame.K_s and direction_Snake == pygame.K_w):
+                elif(event.key in [pygame.K_s, pygame.K_DOWN] and direction_Snake in [pygame.K_w, pygame.K_UP]):
                     continue;
-                elif(event.key == pygame.K_d and direction_Snake == pygame.K_a):
-                    continue
+                elif(event.key in [pygame.K_d, pygame.K_RIGHT] and direction_Snake in [pygame.K_a, pygame.K_LEFT]):
+                    continue;
             
                 direction_Snake = event.key;       
 
-    if(direction_Snake == pygame.K_a):
+    if(direction_Snake in [pygame.K_a, pygame.K_LEFT]):
         pos_Snake[0] = pos_Snake[0][X] - form_MRU, pos_Snake[0][Y];
-    elif(direction_Snake == pygame.K_d):
+    elif(direction_Snake in [pygame.K_d, pygame.K_RIGHT]):
         pos_Snake[0] = pos_Snake[0][X] + form_MRU, pos_Snake[0][Y];
-    elif(direction_Snake == pygame.K_w):
+    elif(direction_Snake in [pygame.K_w, pygame.K_UP]):
         pos_Snake[0] = pos_Snake[0][X], pos_Snake[0][Y] - form_MRU;
-    elif(direction_Snake == pygame.K_s):
+    elif(direction_Snake in [pygame.K_s, pygame.K_DOWN]):
         pos_Snake[0] = pos_Snake[0][X], pos_Snake[0][Y] + form_MRU;
 
             
@@ -112,24 +109,19 @@ while snake_Running:
     
 
     for index in range(len(pos_Snake) -1,0, -1):
-
         if(pos_Snake[0] == pos_Snake[index]):
             snake_Running = False;
             
         pos_Snake[index] = pos_Snake[index-1]
 
-
     for coords in pos_Snake:
-         
         window.blit(snake_Surface, coords);
     
     for index in range(num_MaxApples):
-
         window.blit(apple_Surface, pos_Apple[index]);
         apple_Surface.fill((255, 0, 0));
 
         if (abs(pos_Apple[index][X] - pos_Snake[0][X]) < 6) and ( abs(pos_Apple[index][Y] - pos_Snake[0][Y]) < 6):
-
             pos_Snake.append((block_Space,block_Space))
             pos_Apple[index] = sortApple();
             points_Apple += 1;
@@ -146,5 +138,4 @@ while snake_Running:
     
     window.blit(showText_Points, (420,30))
 
-    pygame.display.update();     
-
+    pygame.display.update();
