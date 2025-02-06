@@ -33,6 +33,7 @@ direction_Snake = pygame.K_w;
 time_Initial = time.time();
 
 def sortApple():
+    
     return random.randint(15, 585), random.randint(15, 585);
 
 apple_Surface = pygame.Surface((block_Space, block_Space));
@@ -46,6 +47,7 @@ len_ListApple = len(pos_Apple);
 font_PointsApple = pygame.font.SysFont('arial', 35, True, True);
 
 def sortObstacle():
+
     coords_Verify = (random.randint(15, 585), random.randint(15, 585));
      
     for index in range(num_MaxApples):
@@ -121,20 +123,22 @@ while snake_Running:
         window.blit(apple_Surface, pos_Apple[index]);
         apple_Surface.fill((255, 0, 0));
 
-        if (abs(pos_Apple[index][X] - pos_Snake[0][X]) < 6) and ( abs(pos_Apple[index][Y] - pos_Snake[0][Y]) < 6):
+        if (abs(pos_Apple[index][X] - pos_Snake[0][X]) < 7) and ( abs(pos_Apple[index][Y] - pos_Snake[0][Y]) < 7):
             pos_Snake.append((block_Space,block_Space))
             pos_Apple[index] = sortApple();
             points_Apple += 1;
 
             velocity_Snake = min(0.1 + (points_Apple/5) * 0.02, 0.5);
             if(points_Apple % 5 == 0 and points_Apple != 0):
-                print("ola");
                 coords_Obstacles.append(sortObstacle());
             break;
     
     for indexObs in range(len(coords_Obstacles)):
         window.blit(obstacle_Surface, coords_Obstacles[indexObs]);
         obstacle_Surface.fill((0, 0, 0));
+
+        if ((abs(coords_Obstacles[indexObs][X] - pos_Snake[0][X]) < 7) and (abs(coords_Obstacles[indexObs][Y] - pos_Snake[0][Y]) < 7 )):
+            snake_Running = False;
     
     window.blit(showText_Points, (420,30))
 
